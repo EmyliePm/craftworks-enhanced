@@ -1,3 +1,33 @@
+:root {
+  /* Craftworkz Enhanced */
+  --carbon: #101719;
+  --graphite: #202a2b;
+  --eucalyptus: #536761;
+
+  --stone: #c9c2b6;
+  --ivory: #f2efe8;
+
+  --copper: #b9683f;
+  --copper-light: #d48a60;
+
+  /* Supporting */
+  --white: #ffffff;
+  --black: #000000;
+
+  /* Typography */
+  --font-primary: var(--font-jakarta);
+  --font-editorial: var(--font-playfair);
+
+  /* Layout */
+  --page-padding: clamp(1.25rem, 4vw, 5rem);
+  --max-width: 1600px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 250ms var(--ease-out);
+  --transition-slow: 700ms var(--ease-out);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -10,13 +40,15 @@ html {
 
 html,
 body {
-  max-width: 100vw;
+  width: 100%;
   min-height: 100%;
 }
 
 body {
-  background: #111111;
-  color: #f5f3ef;
+  background: var(--ivory);
+  color: var(--carbon);
+  font-family: var(--font-primary), sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -26,11 +58,21 @@ a {
 
 button,
 input,
-textarea {
+textarea,
+select {
   font: inherit;
+}
+
+button {
+  border: 0;
 }
 
 img {
   display: block;
   max-width: 100%;
+}
+
+::selection {
+  background: var(--copper);
+  color: var(--ivory);
 }

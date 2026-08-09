@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
+import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
-  title: "Craftworkz | Property Maintenance & Improvements",
+  title: "Craftworkz | Property • Craft • Care",
   description:
-    "Professional property maintenance, repairs and improvements from Craftworkz.",
+    "Property improvement, craftsmanship and maintenance — inside and out.",
 };
 
 export default function RootLayout({
@@ -14,7 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`${jakarta.variable} ${playfair.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
