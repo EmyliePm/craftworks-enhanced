@@ -1,5 +1,8 @@
 :root {
-  /* Craftworkz Enhanced */
+  /* ========================================
+     CRAFTWORKZ ENHANCED — BRAND
+  ======================================== */
+
   --carbon: #101719;
   --graphite: #202a2b;
   --eucalyptus: #536761;
@@ -10,25 +13,41 @@
   --copper: #b9683f;
   --copper-light: #d48a60;
 
-  /* Supporting */
   --white: #ffffff;
   --black: #000000;
 
-  /* Typography */
+  /* ========================================
+     TYPOGRAPHY
+  ======================================== */
+
   --font-primary: var(--font-jakarta);
   --font-editorial: var(--font-playfair);
 
-  /* Layout */
+  /* ========================================
+     LAYOUT
+  ======================================== */
+
   --page-padding: clamp(1.25rem, 4vw, 5rem);
   --max-width: 1600px;
 
-  /* Motion */
+  /* ========================================
+     MOTION
+  ======================================== */
+
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
   --transition-fast: 250ms var(--ease-out);
+  --transition-medium: 450ms var(--ease-out);
   --transition-slow: 700ms var(--ease-out);
 }
 
-* {
+/* ========================================
+   RESET
+======================================== */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -36,6 +55,7 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--carbon);
 }
 
 html,
@@ -45,11 +65,20 @@ body {
 }
 
 body {
-  background: var(--ivory);
-  color: var(--carbon);
+  background: var(--carbon);
+  color: var(--ivory);
+
   font-family: var(--font-primary), sans-serif;
+
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow-x: hidden;
 }
+
+/* ========================================
+   ELEMENT DEFAULTS
+======================================== */
 
 a {
   color: inherit;
@@ -67,12 +96,44 @@ button {
   border: 0;
 }
 
-img {
+img,
+picture {
   display: block;
   max-width: 100%;
 }
 
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ========================================
+   TEXT SELECTION
+======================================== */
+
 ::selection {
   background: var(--copper);
   color: var(--ivory);
+}
+
+/* ========================================
+   SCROLLBAR
+======================================== */
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--carbon);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--eucalyptus);
+  border: 2px solid var(--carbon);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--copper);
 }
