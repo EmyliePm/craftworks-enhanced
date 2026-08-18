@@ -1,0 +1,309 @@
+.section {
+  position: relative;
+
+  padding: clamp(5rem, 8vw, 8.5rem) var(--page-padding);
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 86% 18%,
+      rgba(83, 103, 97, 0.38),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 10% 85%,
+      rgba(185, 104, 63, 0.1),
+      transparent 32%
+    ),
+    linear-gradient(135deg, var(--graphite) 0%, #182324 48%, var(--carbon) 100%);
+
+  color: var(--ivory);
+}
+
+/* Decorative brand circle */
+
+.section::before {
+  content: "";
+
+  position: absolute;
+  top: -180px;
+  right: -120px;
+
+  width: 540px;
+  height: 540px;
+
+  border: 1px solid rgba(212, 138, 96, 0.14);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 70px rgba(185, 104, 63, 0.018),
+    0 0 0 140px rgba(83, 103, 97, 0.018);
+
+  pointer-events: none;
+}
+
+/* ---------------- Main Layout ---------------- */
+
+.inner {
+  position: relative;
+  z-index: 2;
+
+  max-width: var(--max-width);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns:
+    minmax(420px, 0.9fr)
+    minmax(520px, 1.1fr);
+
+  gap: clamp(4rem, 8vw, 9rem);
+
+  align-items: center;
+}
+
+/* ---------------- Introduction ---------------- */
+
+.intro {
+  max-width: 680px;
+}
+
+.eyebrow {
+  margin-bottom: 1.5rem;
+
+  color: var(--copper-light);
+
+  font-size: clamp(0.9rem, 0.95vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1.2;
+
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.intro h2 {
+  max-width: 650px;
+
+  color: var(--ivory);
+
+  font-size: clamp(3.8rem, 5.8vw, 6.8rem);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+.intro h2 span {
+  display: block;
+
+  margin-top: 0.08em;
+
+  color: var(--copper-light);
+
+  font-family: var(--font-editorial), serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.lead {
+  max-width: 600px;
+
+  margin-top: 2.2rem;
+
+  color: rgba(242, 239, 232, 0.76);
+
+  font-size: clamp(1.15rem, 1.35vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+/* ---------------- Services ---------------- */
+
+.services {
+  display: flex;
+  flex-direction: column;
+
+  border-top: 1px solid rgba(242, 239, 232, 0.13);
+}
+
+.service {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 1.6rem;
+
+  padding: 2.4rem 0;
+
+  border-bottom: 1px solid rgba(242, 239, 232, 0.13);
+
+  transition:
+    padding-left var(--transition-medium),
+    background var(--transition-medium);
+}
+
+/* Service number */
+
+.number {
+  padding-top: 0.15rem;
+
+  color: var(--copper-light);
+
+  font-family: var(--font-editorial), serif;
+  font-size: clamp(1.35rem, 1.5vw, 1.65rem);
+  line-height: 1;
+}
+
+/* Service title */
+
+.service h3 {
+  margin-bottom: 0.8rem;
+
+  color: var(--ivory);
+
+  font-size: clamp(1.7rem, 2.2vw, 2.35rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+/* Service description */
+
+.service p {
+  max-width: 650px;
+
+  color: rgba(242, 239, 232, 0.7);
+
+  font-size: clamp(1.15rem, 1.15vw, 1.2rem);
+  line-height: 1.7;
+}
+
+/* Copper hover line */
+
+.line {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+
+  width: 0;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    var(--copper-light),
+    var(--copper),
+    transparent
+  );
+
+  transition: width var(--transition-medium);
+}
+
+/* ---------------- Service Hover ---------------- */
+
+.service:hover {
+  padding-left: 1.25rem;
+
+  background: linear-gradient(
+    90deg,
+    rgba(185, 104, 63, 0.08),
+    rgba(83, 103, 97, 0.04),
+    transparent
+  );
+}
+
+.service:hover .line {
+  width: 100%;
+}
+
+/* ---------------- Tablet ---------------- */
+
+@media (max-width: 1100px) {
+  .inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .intro h2 {
+    font-size: clamp(3.6rem, 6vw, 5.5rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 5rem var(--page-padding);
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 4.5rem;
+  }
+
+  .intro {
+    max-width: 760px;
+  }
+
+  .lead {
+    max-width: 680px;
+  }
+
+  .services {
+    max-width: 850px;
+  }
+}
+
+/* ---------------- Mobile ---------------- */
+
+@media (max-width: 650px) {
+  .section {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .section::before {
+    width: 360px;
+    height: 360px;
+
+    top: -120px;
+    right: -190px;
+  }
+
+  .eyebrow {
+    margin-bottom: 1.2rem;
+
+    font-size: 0.82rem;
+    letter-spacing: 0.15em;
+  }
+
+  .intro h2 {
+    font-size: clamp(3.1rem, 14vw, 4.4rem);
+  }
+
+  .lead {
+    margin-top: 1.8rem;
+
+    font-size: 1.15rem;
+    line-height: 1.7;
+  }
+
+  .service {
+    grid-template-columns: 48px 1fr;
+    gap: 1rem;
+
+    padding: 2rem 0;
+  }
+
+  .number {
+    font-size: 1.2rem;
+  }
+
+  .service h3 {
+    font-size: 1.65rem;
+  }
+
+  .service p {
+    font-size: 1.02rem;
+    line-height: 1.65;
+  }
+
+  .service:hover {
+    padding-left: 0;
+  }
+}

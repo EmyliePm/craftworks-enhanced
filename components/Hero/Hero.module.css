@@ -1,8 +1,7 @@
 .hero {
   position: relative;
 
-  min-height: 100vh;
-  padding: 0 var(--page-padding) 3rem;
+  padding: 0 var(--page-padding);
 
   overflow: hidden;
 
@@ -358,7 +357,7 @@
 
   color: var(--copper-light);
 
-  font-size: 0.58rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -376,7 +375,7 @@
 
   color: rgba(242, 239, 232, 0.62);
 
-  font-size: 0.72rem;
+  font-size: 0.8rem;
 }
 
 .dragHint {
@@ -429,7 +428,7 @@
 
   cursor: pointer;
 
-  font-size: 0.74rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.09em;
   text-transform: uppercase;

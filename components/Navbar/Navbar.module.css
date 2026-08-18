@@ -1,73 +1,98 @@
 .header {
-  position: relative;
-  z-index: 50;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 
-  max-width: var(--max-width);
-  margin: 0 auto;
+  width: 100%;
 
-  min-height: 108px;
+  min-height: 104px;
 
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: minmax(280px, 1fr) auto minmax(240px, 1fr);
   align-items: center;
-  gap: 2rem;
+  gap: clamp(2rem, 4vw, 4rem);
 
-  border-bottom: 1px solid rgba(242, 239, 232, 0.11);
+  padding: 0 var(--page-padding);
+
+  background: linear-gradient(
+    90deg,
+    rgba(16, 23, 25, 0.98),
+    rgba(24, 35, 36, 0.98)
+  );
+
+  border-bottom: 1px solid rgba(242, 239, 232, 0.1);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
+
+/* ---------------- Brand ---------------- */
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 1rem;
 
   width: fit-content;
 }
 
 .logo {
-  width: 58px;
+  width: 68px;
   height: auto;
 
+  flex-shrink: 0;
+
   filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.28))
-    drop-shadow(0 0 12px rgba(185, 104, 63, 0.12));
+    drop-shadow(0 0 12px rgba(185, 104, 63, 0.16));
 }
 
 .brandText {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.3rem;
 }
 
 .brandName {
   color: var(--ivory);
 
-  font-size: 0.92rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
+  font-size: clamp(1rem, 1.15vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1;
+
+  letter-spacing: 0.16em;
 }
 
 .tagline {
   color: var(--copper-light);
 
-  font-size: 0.54rem;
-  font-weight: 600;
-  letter-spacing: 0.24em;
+  font-size: clamp(0.68rem, 0.72vw, 0.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+
+  letter-spacing: 0.16em;
 }
+
+/* ---------------- Navigation ---------------- */
 
 .nav {
   display: flex;
   align-items: center;
-  gap: clamp(1.5rem, 2.6vw, 3rem);
+  gap: clamp(2rem, 3.5vw, 4rem);
 
-  color: rgba(242, 239, 232, 0.74);
+  color: rgba(242, 239, 232, 0.78);
 
-  font-size: 0.8rem;
+  font-size: clamp(1.5rem, 1vw, 1.08rem);
   font-weight: 500;
 }
 
 .nav a {
   position: relative;
 
-  transition: color var(--transition-fast);
+  padding: 0.5rem 0;
+
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .nav a::after {
@@ -75,12 +100,12 @@
 
   position: absolute;
   left: 0;
-  bottom: -0.45rem;
+  bottom: 0;
 
   width: 100%;
-  height: 1px;
+  height: 2px;
 
-  background: var(--copper-light);
+  background: linear-gradient(90deg, var(--copper-light), var(--copper));
 
   transform: scaleX(0);
   transform-origin: right;
@@ -90,6 +115,7 @@
 
 .nav a:hover {
   color: var(--ivory);
+  transform: translateY(-1px);
 }
 
 .nav a:hover::after {
@@ -97,27 +123,31 @@
   transform-origin: left;
 }
 
+/* ---------------- CTA ---------------- */
+
 .projectButton {
   justify-self: end;
 
-  padding: 0.95rem 1.35rem;
+  padding: 1rem 1.5rem;
 
-  border: 1px solid rgba(212, 138, 96, 0.5);
+  border: 1px solid rgba(212, 138, 96, 0.55);
 
   background: linear-gradient(
     135deg,
-    rgba(185, 104, 63, 0.96),
-    rgba(159, 81, 44, 0.96)
+    rgba(185, 104, 63, 0.98),
+    rgba(159, 81, 44, 0.98)
   );
 
   color: var(--ivory);
 
   box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.18),
+    0 10px 28px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: clamp(0.82rem, 0.9vw, 0.95rem);
+  font-weight: 700;
+  line-height: 1;
+
   letter-spacing: 0.08em;
   text-transform: uppercase;
 
@@ -133,11 +163,13 @@
   background: linear-gradient(135deg, var(--copper-light), var(--copper));
 
   box-shadow:
-    0 14px 32px rgba(0, 0, 0, 0.26),
-    0 0 24px rgba(185, 104, 63, 0.14);
+    0 14px 34px rgba(0, 0, 0, 0.28),
+    0 0 26px rgba(185, 104, 63, 0.16);
 }
 
-@media (max-width: 950px) {
+/* ---------------- Medium screens ---------------- */
+
+@media (max-width: 1100px) {
   .header {
     grid-template-columns: 1fr auto;
   }
@@ -145,28 +177,42 @@
   .nav {
     display: none;
   }
+
+  .logo {
+    width: 62px;
+  }
 }
+
+/* ---------------- Mobile ---------------- */
 
 @media (max-width: 650px) {
   .header {
-    min-height: 84px;
+    min-height: 86px;
+
+    padding: 0 1rem;
+
+    gap: 1rem;
   }
 
   .logo {
-    width: 44px;
+    width: 52px;
+  }
+
+  .brand {
+    gap: 0.75rem;
+  }
+
+  .brandName {
+    font-size: 0.9rem;
   }
 
   .tagline {
     display: none;
   }
 
-  .brandName {
-    font-size: 0.74rem;
-  }
-
   .projectButton {
-    padding: 0.75rem 0.9rem;
+    padding: 0.85rem 1rem;
 
-    font-size: 0.6rem;
+    font-size: 0.72rem;
   }
 }
