@@ -1,16 +1,21 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { MapPin, Search } from "lucide-react";
+import * as maplibregl from "maplibre-gl";
+
 import styles from "./CoverageMap.module.css";
+
+maplibregl.setWorkerUrl(
+  "https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl-csp-worker.js",
+);
 
 type Area = {
   id: string;
   name: string;
   status: string;
   description: string;
-  x: number;
-  y: number;
+  coordinates: [number, number];
 };
 
 const areas: Area[] = [
@@ -20,8 +25,7 @@ const areas: Area[] = [
     status: "Regular coverage",
     description:
       "Property maintenance, interiors and exterior projects across Leeds and surrounding areas.",
-    x: 50,
-    y: 28,
+    coordinates: [-1.5491, 53.8008],
   },
   {
     id: "wakefield",
@@ -29,8 +33,7 @@ const areas: Area[] = [
     status: "Primary service area",
     description:
       "Craftworkz is based around Wakefield, with full coverage across our core property services.",
-    x: 53,
-    y: 48,
+    coordinates: [-1.4991, 53.6833],
   },
   {
     id: "huddersfield",
@@ -38,8 +41,7 @@ const areas: Area[] = [
     status: "Project coverage",
     description:
       "Selected improvement, maintenance and exterior projects across Huddersfield.",
-    x: 32,
-    y: 56,
+    coordinates: [-1.785, 53.6458],
   },
   {
     id: "barnsley",
@@ -47,18 +49,53 @@ const areas: Area[] = [
     status: "Project coverage",
     description:
       "Exterior, maintenance and property improvement work available by project.",
-    x: 52,
-    y: 72,
+    coordinates: [-1.479, 53.5526],
   },
 ];
 
 export default function CoverageMap() {
+  const mapContainer = useRef<HTMLDivElement | null>(null);
+  const mapRef = useRef<maplibregl.Map | null>(null);
+
   const [activeArea, setActiveArea] = useState<Area>(
     areas.find((area) => area.id === "wakefield")!,
   );
 
   const [postcode, setPostcode] = useState("");
   const [postcodeMessage, setPostcodeMessage] = useState("");
+
+  useEffect(() => {
+    if (!mapContainer.current) return;
+
+    const map = new maplibregl.Map({
+      container: mapContainer.current,
+      style: "https://tiles.openfreemap.org/styles/liberty",
+      center: [-1.58, 53.68],
+      zoom: 10,
+    });
+
+    mapRef.current = map;
+
+    map.on("error", (event) => {
+      console.error("MAP ERROR:", event.error);
+    });
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  function handleAreaSelect(area: Area) {
+    setActiveArea(area);
+
+    mapRef.current?.flyTo({
+      center: area.coordinates,
+      zoom: 12,
+      duration: 1400,
+      essential: true,
+    });
+  }
 
   function handlePostcode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -105,116 +142,11 @@ export default function CoverageMap() {
             </div>
 
             <div className={styles.map}>
-              <svg
-                viewBox="0 0 700 620"
-                className={styles.mapSvg}
-                aria-label="Craftworkz service coverage map"
-              >
-                <defs>
-                  <radialGradient id="coverageGlow">
-                    <stop
-                      offset="0%"
-                      stopColor="var(--eucalyptus)"
-                      stopOpacity="0.35"
-                    />
-                    <stop
-                      offset="100%"
-                      stopColor="var(--eucalyptus)"
-                      stopOpacity="0"
-                    />
-                  </radialGradient>
-                </defs>
-
-                {/* abstract region boundary */}
-                <path
-                  className={styles.region}
-                  d="
-                    M158 90
-                    C220 45 315 42 376 77
-                    C437 46 523 77 559 139
-                    C620 187 619 264 585 312
-                    C624 382 591 457 530 480
-                    C496 550 405 571 343 534
-                    C276 575 184 538 167 471
-                    C91 443 67 358 106 300
-                    C61 229 91 143 158 90
-                    Z
-                  "
-                />
-
-                {/* subtle internal lines */}
-                <path
-                  className={styles.route}
-                  d="M175 165 C265 211 361 217 532 177"
-                />
-
-                <path
-                  className={styles.route}
-                  d="M133 324 C257 273 377 304 573 365"
-                />
-
-                <path
-                  className={styles.route}
-                  d="M273 103 C304 228 288 368 342 524"
-                />
-
-                <path
-                  className={styles.route}
-                  d="M472 101 C429 227 454 361 413 532"
-                />
-
-                {/* Wakefield coverage glow */}
-                <circle
-                  cx="371"
-                  cy="296"
-                  r="160"
-                  fill="url(#coverageGlow)"
-                  className={styles.coverageGlow}
-                />
-
-                {areas.map((area) => {
-                  const cx = (area.x / 100) * 700;
-                  const cy = (area.y / 100) * 620;
-                  const active = activeArea.id === area.id;
-
-                  return (
-                    <g
-                      key={area.id}
-                      className={`${styles.markerGroup} ${
-                        active ? styles.markerActive : ""
-                      }`}
-                      onMouseEnter={() => setActiveArea(area)}
-                      onClick={() => setActiveArea(area)}
-                      tabIndex={0}
-                      role="button"
-                      aria-label={`View coverage information for ${area.name}`}
-                      onFocus={() => setActiveArea(area)}
-                    >
-                      <circle
-                        cx={cx}
-                        cy={cy}
-                        r={active ? 28 : 21}
-                        className={styles.markerOuter}
-                      />
-
-                      <circle
-                        cx={cx}
-                        cy={cy}
-                        r="6"
-                        className={styles.markerInner}
-                      />
-
-                      <text
-                        x={cx + 22}
-                        y={cy - 18}
-                        className={styles.markerLabel}
-                      >
-                        {area.name}
-                      </text>
-                    </g>
-                  );
-                })}
-              </svg>
+              <div
+                ref={mapContainer}
+                className={styles.realMap}
+                aria-label="Interactive Craftworkz service coverage map"
+              />
 
               <div className={styles.areaCard}>
                 <div className={styles.areaIcon}>
@@ -223,7 +155,9 @@ export default function CoverageMap() {
 
                 <div>
                   <p className={styles.areaStatus}>{activeArea.status}</p>
+
                   <h3>{activeArea.name}</h3>
+
                   <p>{activeArea.description}</p>
                 </div>
               </div>
@@ -275,7 +209,7 @@ export default function CoverageMap() {
                   <button
                     key={area.id}
                     type="button"
-                    onClick={() => setActiveArea(area)}
+                    onClick={() => handleAreaSelect(area)}
                     className={
                       activeArea.id === area.id ? styles.coverageActive : ""
                     }
