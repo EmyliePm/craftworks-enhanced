@@ -137,3 +137,51 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--copper);
 }
+
+.conceptNotice {
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  padding: 0.55rem var(--page-padding);
+
+  border-top: 1px solid rgba(212, 138, 96, 0.18);
+  border-bottom: 1px solid rgba(212, 138, 96, 0.22);
+
+  background: #182223;
+  color: rgba(255, 255, 255, 0.7);
+
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+.conceptNotice span {
+  color: var(--copper-light);
+
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.conceptNotice p {
+  margin: 0;
+}
+
+@media (max-width: 650px) {
+  .conceptNotice {
+    min-height: 34px;
+    gap: 0.45rem;
+
+    padding: 0.5rem 1rem;
+
+    font-size: 0.7rem;
+    text-align: center;
+  }
+
+  .conceptNotice span {
+    font-size: 0.66rem;
+  }
+}

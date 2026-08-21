@@ -37,7 +37,7 @@ const services = [
       "Landlord support",
       "General upkeep",
     ],
-    image: "/images/services/property-care.png",
+    image: "/images/services/brick.png",
     imageAlt: "Craftworkz property maintenance work",
   },
 ];
